@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>编辑影片</title>
+  <link type="text/css" rel="stylesheet" href="/static/css/style.css" >
+  <style type="text/css">
+    h1 {
+      text-align: center;
+      margin-top: 200px;
+    }
+
+    h1 a {
+      color:red;
+    }
+
+    input {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div id="header">
+  <img class="logo_img" alt="" src="/static/img/logo.gif" >
+  <span class="wel_word">编辑影片</span>
+  <div>
+    <a href="/getBooks">影院管理</a>
+    <a href="/main">返回主页</a>
+  </div>
+</div>
+
+<div id="main">
+  <form action="/updateOrAddMovie" method="POST">
+
+    <table>
+      <tr>
+        <td>名称</td>
+        <td>影厅</td>
+        <td>编号</td>
+        <td>信息</td>
+        <td>图片地址</td>
+        <td colspan="2">操作</td>
+      </tr>
+      <tr>
+        {{if .}}
+        <input type="hidden" name="movieId" value="{{.MovieID}}">
+        <td><input name="name" type="text" value="{{.MovieName}}"/></td>
+        <td><input name="duration" type="text" value="{{.Duration}}"/></td>
+        <td><input name="number" type="text" value="{{.MovieNumber}}"/></td>
+        <td><input name="information" type="text" value="{{.MovieInformation}}"/></td>
+        <td><input name="imgaddress" type="text" value="{{.ImgAddress}}"/></td>
+        {{else}}
+        <td><input name="name" type="text"/></td>
+        <td><input name="duration" type="text"/></td>
+        <td><input name="number" type="text"/></td>
+        <td><input name="information" type="text"/></td>
+        <td><input name="imgaddress" type="text"/></td>
+        {{end}}
+        <td><input type="submit" value="提交"/></td>
+      </tr>
+    </table>
+  </form>
+
+
+</div>
+
+<div id="bottom">
+			<span>
+				尚硅谷书城.Copyright &copy;2015
+			</span>
+</div>
+</body>
+</html>

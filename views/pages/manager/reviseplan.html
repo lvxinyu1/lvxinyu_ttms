@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改排片信息</title>
+</head>
+<body>
+<a href="/main">返回主页</a>
+<a href="/getCinema">影片管理</a>
+<a href="/performancePlan">演出计划</a>
+<a href="/addCinema">增加影厅</a>
+<div class="b_list">
+  {{range .Plan}}
+  <div class="cinema_info">
+    <div class="cinema_name">
+      <span class="sp1">排片序号:</span>
+      <span class="sp2">{{.PlanId}}</span>
+    </div>
+    <div class="cinema_address">
+      <span class="sp1">电影名称：</span>
+      <span class="sp2">{{.MovieName}}</span>
+    </div>
+    <div class="cinema_number">
+      <span class="sp1">影厅序号：</span>
+      <span class="sp2">{{.CinemaId}}</span>
+    </div>
+    <div class="cinema_movie">
+      <span class="sp1">起始时间：</span>
+      <span class="sp2">{{.PlanTime}}</span>
+    </div>
+    <td><a href="/addPlan?PlanId={{.PlanId}}">修改</a></td>
+    <td><a id="{{.PlanId}}" class="deletePlan" href="/deletePlan?PlanId={{.PlanId}}">删除</a></td>
+
+  </div>
+  {{end}}
+  <div id="page_nav">
+    {{if .IsHasPrev}}
+    <a href="/revisePlan?min={{.MinPrice}}&max={{.MaxPrice}}">首页</a>
+    <a href="/revisePlan?pageNo={{.GetPrevPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">上一页</a>
+    {{end}}
+    当前是第{{.PageNo}}页，共{{.TotalPageNo}}页，共{{.TotalRecord}}条记录
+    {{if .IsHasNext}}
+    <a href="/revisePlan?pageNo={{.GetNextPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">下一页</a>
+    <a href="/revisePlan?pageNo={{.TotalPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">末页</a>
+    {{end}}
+    到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
+    <input type="button" value="确定" id="sub">
+    <script>
+      //给确定按钮绑定单击事件
+      $("#sub").click(function(){
+        //获取输入的页码
+        var pageNo = $("#pn_input").val();
+        location = "/main?pageNo="+pageNo+"&min={{.MinPrice}}&max={{.MaxPrice}}"
+      });
+    </script>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{{range .}}
+<div class="cinema_info">
+    <div class="cinema_name">
+        <span class="sp1">排片序号:</span>
+        <span class="sp2">{{.PlanId}}</span>
+    </div>
+    <div class="cinema_address">
+        <span class="sp1">电影名称：</span>
+        <span class="sp2">{{.MovieName}}</span>
+    </div>
+    <div class="cinema_number">
+        <span class="sp1">影厅序号：</span>
+        <span class="sp2">{{.CinemaId}}</span>
+    </div>
+    <div class="cinema_movie">
+        <span class="sp1">起始时间：</span>
+        <span class="sp2">{{.PlanTime}}</span>
+    </div>
+    <a href="/buytickets?planId={{.PlanId}}">购票</a>
+</div>
+{{end}}
+</body>
+</html>

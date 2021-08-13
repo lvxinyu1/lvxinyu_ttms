@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加/更新影院</title>
+</head>
+<body>
+<div id="header">
+  <img class="logo_img" alt="" src="/static/img/logo.gif" >
+  <span class="wel_word">编辑影院</span>
+  <div>
+    <a href="/getBooks">影片管理</a>
+    <a href="/main">返回主页</a>
+  </div>
+</div>
+
+<div id="main">
+  <form action="/updateOrAddCinema" method="POST">
+
+    <table>
+      <tr>
+        <td>名称</td>
+        <td>行数</td>
+        <td>列数</td>
+        <td colspan="2">操作</td>
+      </tr>
+      <tr>
+        {{if .}}
+        <input type="hidden" name="CinemaId" value="{{.CinemaId}}">
+        <td><input name="name" type="text" value="{{.CinemaName}}"/></td>
+        <td><input name="seatRow" type="text" value="{{.SeatRow}}"/></td>
+        <td><input name="seatList" type="text" value="{{.SeatList}}"/></td>
+        {{else}}
+        <td><input name="name" type="text"/></td>
+        <td><input name="seatRow" type="text"/></td>
+        <td><input name="seatList" type="text"/></td>
+        {{end}}
+        <td><input type="submit" value="提交"/></td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>

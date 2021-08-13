@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>演出计划</title>
+</head>
+<style>
+  div{
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 10px;
+
+  }
+  .um_span{
+    color: red;
+  }
+  .b_list{
+    height:300px;
+    width:250px;
+    margin: 50px;
+    float: left;
+    margin-top:50px;
+    margin-bottom:50px;
+    border: 1px #e3e3e3 solid;
+  }
+  .img_div{
+    height: 200px;
+    text-align: center;
+  }
+  .cinema_img {
+    height:200px;
+    width:150px;
+  }
+
+  .cinema_info {
+
+    text-align: center;
+  }
+  #page_nav{
+    width: 100%;
+    height: 10px;
+    margin: auto;
+
+    text-align: center;
+  }
+</style>
+<body>
+<a href="/manageCinema">影厅管理</a>
+<a href="/getCinema">影片管理</a>
+<a href="/main">返回主页</a>
+{{range .Movie}}
+<div class="b_list">
+  <div class="img_div">
+    <img class="cinema_img" alt="" src="{{.ImgAddress}}" />
+  </div>
+  <div class="cinema_info">
+    <div class="cinema_name">
+      <span class="sp1">电影名称:</span>
+      <span class="sp2">{{.MovieName}}</span>
+    </div>
+    <div class="cinema_address">
+      <span class="sp1">播放影厅：</span>
+      <span class="sp2">{{.Duration}}</span>
+    </div>
+    <div class="cinema_number">
+      <span class="sp1">电影编号：</span>
+      <span class="sp2">{{.MovieNumber}}</span>
+    </div>
+    <div class="cinema_movie">
+      <span class="sp1">电影信息：</span>
+      <span class="sp2">{{.MovieInformation}}</span>
+    </div>
+    <div class="cinema_add">
+      <a href="/addPlan?MovieName={{.MovieName}}">增加排片</a>
+    </div>
+  </div>
+</div>
+{{end}}
+<a href="/revisePlan">修改排片信息</a>
+<div id="page_nav">
+  {{if .IsHasPrev}}
+  <a href="/performancePlan?min={{.MinPrice}}&max={{.MaxPrice}}">首页</a>
+  <a href="/performancePlan?pageNo={{.GetPrevPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">上一页</a>
+  {{end}}
+  当前是第{{.PageNo}}页，共{{.TotalPageNo}}页，共{{.TotalRecord}}条记录
+  {{if .IsHasNext}}
+  <a href="/performancePlan?pageNo={{.GetNextPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">下一页</a>
+  <a href="/performancePlan?pageNo={{.TotalPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">末页</a>
+  {{end}}
+  到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
+  <input type="button" value="确定" id="sub">
+  <script>
+    //给确定按钮绑定单击事件
+    $("#sub").click(function(){
+      //获取输入的页码
+      var pageNo = $("#pn_input").val();
+      location = "/main?pageNo="+pageNo+"&min={{.MinPrice}}&max={{.MaxPrice}}"
+    });
+  </script>
+</div>
+</body>
+
+</html>

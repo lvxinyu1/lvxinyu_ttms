@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TTMS</title>
+    <script src="/static/script/jquery-1.7.2.js"></script>
+<!--    <link type="text/css" rel="stylesheet" href="/static/css/style.css" >-->
+<style>
+    div{
+        margin: auto;
+        margin-bottom: 20px;
+        margin-top: 10px;
+
+    }
+    .um_span{
+        color: red;
+    }
+    .b_list{
+        height:300px;
+        width:250px;
+        margin: 50px;
+        float: left;
+        margin-top:50px;
+        margin-bottom:50px;
+        border: 1px #e3e3e3 solid;
+    }
+    .img_div{
+        height: 200px;
+        text-align: center;
+    }
+    .cinema_img {
+        height:200px;
+        width:150px;
+    }
+
+    .cinema_info {
+
+        text-align: center;
+    }
+    #page_nav{
+        width: 100%;
+        height: 10px;
+        margin: auto;
+
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    {{if .IsLogin}}
+    <div>
+        <span>欢迎<span class="um_span">{{.UserName}}</span>光临西邮影院</span>
+        <a href="#">我的订单</a>
+        <a href="/logout">注销</a>&nbsp;&nbsp;
+        <a href="/backstageManagement">后台管理</a>
+        <a href="#">返回</a>
+    </div>
+    {{else}}
+        <a href="/login2">登录</a>
+        <a href="/regist2">注册</a>
+        <a href="/backstageManagement">后台管理</a>
+    {{end}}
+    {{range .Movie}}
+    <div class="b_list">
+        <div class="img_div">
+            <img class="cinema_img" alt="" src="{{.ImgAddress}}" />
+        </div>
+        <div class="cinema_info">
+            <div class="cinema_name">
+                <span class="sp1">电影名称:</span>
+                <span class="sp2">{{.MovieName}}</span>
+            </div>
+            <div class="cinema_address">
+                <span class="sp1">播放时长：</span>
+                <span class="sp2">{{.Duration}}</span>
+            </div>
+            <div class="cinema_number">
+                <span class="sp1">电影编号：</span>
+                <span class="sp2">{{.MovieNumber}}</span>
+            </div>
+            <div class="cinema_movie">
+                <span class="sp1">电影信息：</span>
+                <span class="sp2">{{.MovieInformation}}</span>
+            </div>
+
+            <div class="cinema_add">
+                <td><a href="/toGetTicket?movieId={{.MovieID}}">选座购票</a></td>
+            </div>
+        </div>
+    </div>
+    {{end}}
+    <div id="page_nav">
+        {{if .IsHasPrev}}
+        <a href="/main?min={{.MinPrice}}&max={{.MaxPrice}}">首页</a>
+        <a href="/main?pageNo={{.GetPrevPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">上一页</a>
+        {{end}}
+        当前是第{{.PageNo}}页，共{{.TotalPageNo}}页，共{{.TotalRecord}}条记录
+        {{if .IsHasNext}}
+        <a href="/main?pageNo={{.GetNextPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">下一页</a>
+        <a href="/main?pageNo={{.TotalPageNo}}&min={{.MinPrice}}&max={{.MaxPrice}}">末页</a>
+        {{end}}
+        到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
+        <input type="button" value="确定" id="sub">
+        <script>
+            //给确定按钮绑定单击事件
+            $("#sub").click(function(){
+                //获取输入的页码
+                var pageNo = $("#pn_input").val();
+                location = "/main?pageNo="+pageNo+"&min={{.MinPrice}}&max={{.MaxPrice}}"
+            });
+        </script>
+    </div>
+</body>
+
+</html>

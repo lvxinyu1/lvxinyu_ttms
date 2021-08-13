@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加排片信息</title>
+</head>
+<body>
+<div id="header">
+    <img class="logo_img" alt="" src="/static/img/logo.gif" >
+    <span class="wel_word">编辑影片</span>
+    <div>
+        <a href="/getBooks">影院管理</a>
+        <a href="/performancePlan">演出计划</a>
+        <a href="/main">返回主页</a>
+    </div>
+</div>
+
+<div id="main">
+    <form action="/updateOrAddPlan" method="POST">
+
+        <table>
+            <tr>
+                <td>名称</td>
+                <td>影厅编号</td>
+                <td>放映时间</td>
+                <td colspan="2">操作</td>
+            </tr>
+            <tr>
+                <td><input name="name" type="text" value="{{.MovieName}}"/></td>
+                <td><input name="cinemaid" type="text" value="{{.CinemaId}}"/></td>
+                <td><input name="plantime" type="datetime-local" value="{{.PlanTime}}"/></td>
+                <td><input type="submit" value="提交"/></td>
+            </tr>
+        </table>
+    </form>
+
+
+</div>
+</body>
+</html>

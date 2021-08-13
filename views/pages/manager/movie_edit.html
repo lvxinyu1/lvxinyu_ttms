@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理影片</title>
+  <style>
+    #main {
+      height: 460px;
+      width: 1200px;
+      border: 1px black solid;
+      overflow: auto;
+    }
+
+
+  </style>
+</head>
+<body>
+<script>
+  $(function (){
+    $(".deleteMovie").click(function (){
+      var title = $(this).attr("id");
+      var flag = confirm("确定要删除【"+title+"】这本图书吗？");
+      if(!flag){
+        return false;
+      }
+    });
+  });
+</script>
+<div id="header">
+  <img class="logo_img" alt="" src="/static/img/logo.gif" >
+  <span class="wel_word">编辑影片</span>
+  <div>
+    <a href="/manageCinema">影厅管理</a>
+    <a href="/main">返回主页</a>
+  </div>
+</div>
+
+<div id="main">
+  <table>
+    <tr>
+      <td>影片名</td>
+      <td>播放时长</td>
+      <td>影片编号</td>
+      <td>影片信息</td>
+      <td colspan="2">操作</td>
+    </tr>
+    {{range .Movie}}
+    <tr>
+      <td>{{.MovieName}}</td>
+      <td>{{.Duration}}</td>
+      <td>{{.MovieNumber}}</td>
+      <td>{{.MovieInformation}}</td>
+      <td><a href="/toUpdateMovieById?movieId={{.MovieID}}">修改</a></td>
+      <td><a id="{{.MovieID}}" class="deleteMovie" href="/deleteMovie?movieId={{.MovieID}}">删除</a></td>
+    </tr>
+    {{end}}
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><a href="/toUpdateMovieById">添加影片</a></td>
+    </tr>
+  </table>
+  <div id="page_nav">
+    {{if .IsHasPrev}}
+    <a href="/getCinema">首页</a>
+    <a href="/getCinema?pageNo={{.GetPrevPageNo}}">上一页</a>
+    {{end}}
+    当前是第{{.PageNo}}页，共{{.TotalPageNo}}页，共{{.TotalRecord}}条记录
+    {{if .IsHasNext}}
+    <a href="/getCinema?pageNo={{.GetNextPageNo}}">下一页</a>
+    <a href="/getCinema?pageNo={{.TotalPageNo}}">末页</a>
+    {{end}}
+    到第<input value="{{.PageNo}}" name="pn" id="pn_input"/>页
+    <input type="button" value="确定" id="sub">
+    <script>
+      $("#sub").click(function (){
+        var pagNo = $("#pn_input").val();
+        location = "/main?pageNo="+pagNo
+      })
+    </script>
+  </div>
+</div>
+
+
+</div>
+</body>
+</html>
